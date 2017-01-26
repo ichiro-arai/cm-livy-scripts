@@ -17,9 +17,9 @@ PARCEL=$PARCEL_DIR-$2.parcel
 
 cd ./livy
 
-git checkout v0.2.0
+git checkout branch-0.3
 
-mvn -DskipTests -Dspark.version=1.6.0-cdh5.9.0 -Dhadoop-version=2.6.0-cdh5.9.0 clean package
+mvn -DskipTests -Dspark.version=1.6.0 -Dhadoop-version=2.6.0-cdh5.9.0 clean package
 
 # Prepare parcel
 cd ../
@@ -33,7 +33,8 @@ mkdir -p ./$PARCEL_DIR/rsc-jars
 cp -r ./livy/bin ./$PARCEL_DIR/
 cp -r ./livy/conf ./$PARCEL_DIR/
 cp ./livy/server/target/jars/*.jar ./$PARCEL_DIR/jars/
-cp ./livy/repl/target/jars/*.jar ./$PARCEL_DIR/repl-jars/
+cp ./livy/repl/scala-2.10/target/jars/*.jar ./$PARCEL_DIR/repl-jars/
+cp ./livy/repl/scala-2.11/target/jars/*.jar ./$PARCEL_DIR/repl-jars/
 cp ./livy/rsc/target/jars/*.jar ./$PARCEL_DIR/rsc-jars/
 
 cp -r parcel-src/meta $PARCEL_DIR/
