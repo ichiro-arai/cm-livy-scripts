@@ -10,9 +10,17 @@ fi
 set -ex
 
 JARNAME=LIVY-$1.jar
+CSD_DIR=csd-build
+
+[ ! -d ./$CSD_DIR ] && rm -rf ./$CSD_DIR
+
+mkdir -p ./$CSD_DIR
+cp -r ./csd-src/* ./$CSD_DIR
+
+sed -i -e "s/%VERSION%/$1/" ./$CSD_DIR/descriptor/*
 
 # validate service description
-java -jar ~/github/cloudera/cm_ext/validator/target/validator.jar -s ./csd-src/descriptor/service.sdl
+java -jar ../cm_ext/validator/target/validator.jar -s ./$CSD_DIR/descriptor/service.sdl
 
-jar -cvf ./$JARNAME -C ./csd-src .
+jar -cvf ./$JARNAME -C ./$CSD_DIR .
 echo "Created $JARNAME"

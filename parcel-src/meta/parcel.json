@@ -17,6 +17,18 @@
   },
   "groups": [],
   "users": {},
-  "packages": [],
-  "components": []
+  "packages": [
+    {
+        "name": "livy",
+        "version": "%VERSION%"
+    }
+  ],
+  "components": [
+    {
+        "name": "livy",
+        "version": "%VERSION%",
+        "pkg_version": "%VERSION%",
+        "pkg_release": "%VERSION%"
+    }
+  ]
 }
