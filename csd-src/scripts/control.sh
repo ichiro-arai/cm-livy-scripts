@@ -4,7 +4,7 @@ CMD=$1
 case $CMD in
   (start)
     export PATH=$JAVA_HOME/bin:$PATH
-    export SPARK_HOME=$CDH_SPARK_HOME
+    export SPARK_HOME=${SPARK_HOME:-$CDH_SPARK_HOME}
     export HADOOP_HOME=${HADOOP_HOME:-$CDH_HADOOP_HOME}
     export LIVY_CONF_DIR=`pwd`/livy-conf
     export LIVY_LOG_DIR=/var/log/livy

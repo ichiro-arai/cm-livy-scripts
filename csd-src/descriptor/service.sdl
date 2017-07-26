@@ -64,6 +64,14 @@
       ],
       "parameters": [
         {
+          "name": "spark_home",
+          "label": "spark_home",
+          "required": "false",
+          "type": "string",
+          "default": "/opt/cloudera/parcels/SPARK2/lib/spark2",
+          "description": "SPARK_HOME environment variable"
+        },
+        {
           "name": "livy.keystore",
           "label": "livy.keystore",
           "required": "false",
@@ -306,7 +314,8 @@
           "start"
         ],
         "environmentVariables" : {
-          "LIVY_LOG_DIR": "/var/log/livy"
+          "LIVY_LOG_DIR": "/var/log/livy",
+          "SPARK_HOME":   "${spark_home}"
         }
       }
     }
