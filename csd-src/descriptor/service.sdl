@@ -36,7 +36,7 @@
       "label" : "Enable Kerberos Authentication",
       "description" : "Enable Kerberos authentication for this LIVY service.",
       "type" : "boolean",
-      "default" : "false"
+      "default" : "true"
     }
   ],
   "kerberos" : "${kerberos.auth.enable}",
@@ -54,13 +54,13 @@
       "kerberosPrincipals" : [
         {
           "name": "LIVY_PRINCIPAL",
-          "primary": "hue",
+          "primary": "${principal}",
           "instance": "${host}"
         },
         {
-          "name": "LIVY_PRINCIPAL_HIVE",
-          "primary": "hive",
-          "instance": "${host}"
+          "name" : "SPNEGO_PRINCIPAL",
+          "primary" : "HTTP",
+          "instance" : "${host}"
         }
       ],
       "parameters": [
@@ -99,7 +99,7 @@
           "label": "livy.spark.master",
           "required": "true",
           "type": "string",
-          "default": "yarn-client",
+          "default": "yarn",
           "description": "What spark master Livy sessions should use."
         },
         {
@@ -107,6 +107,7 @@
           "label": "livy.spark.deployMode",
           "required": "false",
           "type": "string",
+          "default": "cluster",
           "description": "What spark deploy mode Livy sessions should use."
         },
         {
@@ -237,7 +238,8 @@
           "label": "livy.server.auth.type",
           "required": "false",
           "type": "string_enum",
-          "validValues": ["", "kerberos"],
+          "validValues": ["kerberos"],
+          "default": "kerberos",
           "description": "Livy server auth type."
         },
         {
@@ -245,15 +247,8 @@
           "label": "livy.server.auth.kerberos.keytab",
           "required": "false",
           "type": "string",
+          "default": "livy.keytab",
           "description": "Livy server auth kerberos keytab."
-        },
-        {
-          "name": "livy.server.auth.kerberos.principal",
-          "label": "livy.server.auth.kerberos.principal",
-          "required": "false",
-          "type": "string",
-          "description": "Livy server auth kerberos principal",
-          "default": "${principal}"
         },
         {
           "name": "livy.server.auth.kerberos.name_rules",
@@ -263,18 +258,11 @@
           "description": "Livy server auth kerberos name rules"
         },
         {
-          "name": "livy.server.launch.kerberos.principal",
-          "label": "livy.server.launch.kerberos.principal",
-          "required": "false",
-          "type": "string",
-          "description": "Livy server launch kerberos principal",
-          "default": "${principal}"
-        },
-        {
           "name": "livy.server.launch.kerberos.keytab",
           "label": "livy.server.launch.kerberos.keytab",
           "required": "false",
           "type": "string",
+          "default": "livy.keytab",
           "description": "Livy server launch kerberos keytab"
         }
 
@@ -295,7 +283,21 @@
         "generators": [
           {
             "filename": "livy-conf/livy.conf",
-            "configFormat": "properties"
+            "configFormat": "properties",
+            "kerberosPrincipals" : [
+              {
+                "external" : "false",
+                "principalName" : "LIVY_PRINCIPAL",
+                "propertyName" : "livy.server.launch.kerberos.principal",
+                "instanceWildcard" : "_HOST"
+              },
+              {
+                "external" : "false",
+                "principalName" : "SPNEGO_PRINCIPAL",
+                "propertyName" : "livy.server.auth.kerberos.principal",
+                "instanceWildcard" : "_HOST"
+              }
+            ]
           }
         ]
       },
