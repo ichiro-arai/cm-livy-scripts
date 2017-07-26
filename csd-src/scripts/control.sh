@@ -6,7 +6,6 @@ case $CMD in
     export PATH=$JAVA_HOME/bin:$PATH
     export SPARK_HOME=$CDH_SPARK_HOME
     export HADOOP_HOME=${HADOOP_HOME:-$CDH_HADOOP_HOME}
-    export HADOOP_CONF_DIR=$CDH_YARN_HOME/etc/hadoop/
     export LIVY_CONF_DIR=`pwd`/livy-conf
     export LIVY_LOG_DIR=/var/log/livy
     echo "Starting the Livy server"

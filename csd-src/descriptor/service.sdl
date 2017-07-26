@@ -17,8 +17,7 @@
   "icon": "images/livy.png",
   "parcel": {
     "requiredTags": [   
-      "livy",
-      "spark"
+      "livy"
     ],
     "optionalTags": [
       "livy-plugin"
